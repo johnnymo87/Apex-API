@@ -1,3 +1,4 @@
+require 'sinatra'
 require 'mechanize'
 require 'json'
 
@@ -24,7 +25,7 @@ class Apex
     @customers
   end
 
-  def find_devices
+  def find_machines
     url = 'https://fastsolutions.mroadmin.com/Apex-Device/deviceBinAction_initDevicesList.action'
     @machines = {}
     @customers.each do |customer|
@@ -46,22 +47,23 @@ class Apex
   end
 end
 
+
+#get('/') { a = Apex.new }
 a = Apex.new
-a.login('FLGANStore', 'password')
 
+# curl -d "username=FLGANStore&password=password" http://localhost:5000/login
+post '/login' do
+  return a.login(params['username'], params['password']).to_json
+end
 
+#curl http://localhost:5000/customers.json
+get '/customers.json' do
+  content_type :json
+  return a.find_customers.to_json
+end
 
-
-
-
-
-
-require 'sinatra'
-
-
+#curl http://localhost:5000/machines.json
 get '/machines.json' do
   content_type :json
-  return {
-      'customer' => %w(machine1 machine2)
-  }.to_json
+  return a.find_machines.to_json
 end
