@@ -2,6 +2,8 @@ require 'sinatra'
 require 'mechanize'
 require 'json'
 
+# http://shielded-mesa-1340.herokuapp.com/
+
 class Apex
   def initialize
     @browser = Mechanize.new
@@ -10,15 +12,15 @@ class Apex
   def login(username, password)
     url = 'https://fastsolutions.mroadmin.com/APEX-Login/account_login.action'
     login_data = {'user.login_id' => username, 'user.password' => password}
-    response = @browser.post(url, login_data).code
-    if response == '200'
+    code = @browser.post(url, login_data).code
+    if code == '200'
       # comId not available unless I navigate further
       url = 'https://fastsolutions.mroadmin.com/Apex-Device/siteAction_viewSitesOwnedByMyCompany.action'
       response = @browser.get(url).content.split('|')
       @store = response[-1].chomp
-      @store
+      code
     else
-      response
+      code
     end
   end
 
@@ -129,14 +131,12 @@ class Apex
   end
 
   def find_transaction_summary(site_id, device_id, begin_date, end_date)
-    summaries = {}
     url = 'https://fastsolutions.mroadmin.com/ReportManager/usageReportAction_getOwnerReportByDeviceBinValue.action'
     params = {'company.companyId' => @store, 'siteIdTmp' => site_id, 'deviceIdTemp' => device_id,
               'beginDate' => begin_date, 'endDate' => end_date, 'reportType' => 'owner', 'currencyCode' => 'USD'}
     response = @browser.get(url, params).content.split('|')
     response = JSON.parse(response[-1])[0...-1]
-    response.each { |line| summaries[line['motorPosition']] = line }
-    summaries
+    response
   end
 end
 

@@ -5,10 +5,11 @@
     <ignored path="sinatra_project.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/myapp.rb" changelist="bd8f0313-1962-4d3e-baa4-2b2d50eb9b09" time="1377910914828" ignored="false" />
-    <file path="/ApexAPI.rb" changelist="bd8f0313-1962-4d3e-baa4-2b2d50eb9b09" time="1378088609655" ignored="false" />
+    <file path="/ApexAPI.rb" changelist="bd8f0313-1962-4d3e-baa4-2b2d50eb9b09" time="1378131826077" ignored="false" />
     <file path="/Gemfile" changelist="bd8f0313-1962-4d3e-baa4-2b2d50eb9b09" time="1377964104220" ignored="false" />
     <file path="/Procfile.rb" changelist="bd8f0313-1962-4d3e-baa4-2b2d50eb9b09" time="1377964730508" ignored="false" />
     <file path="/Ruby Console" changelist="bd8f0313-1962-4d3e-baa4-2b2d50eb9b09" time="1377986647113" ignored="false" />
+    <file path="/Dummy.txt" changelist="bd8f0313-1962-4d3e-baa4-2b2d50eb9b09" time="1378131948036" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,16 +32,7 @@
       <file leaf-file-name="ApexAPI.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ApexAPI.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="185" column="3" selection-start="7291" selection-end="7291" vertical-scroll-proportion="0.9596774">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Gemfile" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Gemfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="29" selection-start="57" selection-end="57" vertical-scroll-proportion="0.0">
+            <state line="4" column="42" selection-start="96" selection-end="96" vertical-scroll-proportion="0.017473118">
               <folding />
             </state>
           </provider>
@@ -121,7 +113,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CS169/hw1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Vending" />
   </component>
   <component name="RunManager" selected="IRB console.IRB console">
     <configuration default="false" name="IRB console" type="IrbRunConfigurationType" factoryName="IRB console" temporary="true">
@@ -329,7 +321,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26081583" sideWeight="0.6704981" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2603254" sideWeight="0.6704981" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
@@ -468,7 +460,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ApexAPI.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="185" column="3" selection-start="7291" selection-end="7291" vertical-scroll-proportion="0.9596774">
+        <state line="4" column="42" selection-start="96" selection-end="96" vertical-scroll-proportion="0.017473118">
           <folding />
         </state>
       </provider>
