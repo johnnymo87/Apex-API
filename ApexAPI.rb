@@ -97,6 +97,47 @@ class Apex
     end
     counts
   end
+
+  def find_transaction_details(site_id, device_id, begin_date, end_date)
+    transactions = []
+    url = 'https://fastsolutions.mroadmin.com/ReportManager/transactionReportAction_viewTransaction.action'
+    params = {'page' => 1, 'beginDate' => begin_date, 'endDate' => end_date,
+              'checkBoxFileds' => 'Date|ActionDate,Product SKU|ProductNum1,Quantity Dispensed|QtyDispensed,Package Qty|PackageQty',
+              'companyId' => @store, 'sideIdTmp' => site_id, 'deviceId' => device_id, 'searchFlag' => 'SEARCH', 'companyType' => 'OWNER'}
+    response = @browser.get(url, params).content
+    response = JSON.parse(response)[0]['showPageData']
+    response = Nokogiri::HTML(response)
+    pages = response.at_css('#pageLinknull').content
+    pages = pages.scan(/\w+/)[4].to_i
+    (0...pages).each do
+      rows = response.css('.stripe_tb tr')
+      rows.each do |row|
+        columns = row.css('td')
+        record = []
+        (0...columns.length).each do |i|
+          record << columns[i].content.strip
+        end
+        transactions << record
+      end
+      params['page'] += 1
+      response = @browser.get(url, params).content
+      response = JSON.parse(response)[0]['showPageData']
+      response = Nokogiri::HTML(response)
+    end
+    transactions = transactions[0...-2]
+    transactions
+  end
+
+  def find_transaction_summary(site_id, device_id, begin_date, end_date)
+    summaries = {}
+    url = 'https://fastsolutions.mroadmin.com/ReportManager/usageReportAction_getOwnerReportByDeviceBinValue.action'
+    params = {'company.companyId' => @store, 'siteIdTmp' => site_id, 'deviceIdTemp' => device_id,
+              'beginDate' => begin_date, 'endDate' => end_date, 'reportType' => 'owner', 'currencyCode' => 'USD'}
+    response = @browser.get(url, params).content.split('|')
+    response = JSON.parse(response[-1])[0...-1]
+    response.each { |line| summaries[line['motorPosition']] = line }
+    summaries
+  end
 end
 
 
@@ -126,8 +167,20 @@ post '/parts_info.json' do
   return a.find_parts_info(params['site_id']).to_json
 end
 
-#curl -d 'site_id=SIT100110786&device_id=DEV100115202' http://localhost:5000/machine_counts.json
+# curl -d 'site_id=SIT100110786&device_id=DEV100115202' http://localhost:5000/machine_counts.json
 post '/machine_counts.json' do
   content_type :json
   return a.find_machine_counts(params['site_id'], params['device_id']).to_json
+end
+
+# curl -d 'site_id=SIT100110786&device_id=DEV100115202&begin_date=08/01/2013&end_date=08/31/2013' http://localhost:5000/transaction_details.json
+post '/transaction_details.json' do
+  content_type :json
+  return a.find_transaction_details(params['site_id'], params['device_id'], params['begin_date'], params['end_date']).to_json
+end
+
+# curl -d 'site_id=SIT100110786&device_id=DEV100115202&begin_date=08/01/2013&end_date=08/31/2013' http://localhost:5000/transaction_details.json
+post '/transaction_summary.json' do
+  content_type :json
+  return a.find_transaction_summary(params['site_id'], params['device_id'], params['begin_date'], params['end_date']).to_json
 end
