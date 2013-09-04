@@ -12,15 +12,16 @@ class Apex
   def login(username, password)
     url = 'https://fastsolutions.mroadmin.com/APEX-Login/account_login.action'
     login_data = {'user.login_id' => username, 'user.password' => password}
-    code = @browser.post(url, login_data).code
-    if code == '200'
+    response = @browser.post(url, login_data).code
+    if response == '200'
       # comId not available unless I navigate further
-      url = 'https://fastsolutions.mroadmin.com/Apex-Device/siteAction_viewSitesOwnedByMyCompany.action'
-      response = @browser.get(url).content.split('|')
-      @store = response[-1].chomp
-      code
-    else
-      code
+      url = 'https://fastsolutions.mroadmin.com/Apex-Device/siteAction_getSelectedCompanyList.action'
+      response = @browser.get(url).content
+      response = JSON.parse(response)[0]
+      @store = response['tableId']
+      # throw out useless data
+      response = {'name' => response['name'], 'comId' => response['tableId']}
+    response
     end
   end
 
@@ -30,6 +31,7 @@ class Apex
     url = 'https://fastsolutions.mroadmin.com/Apex-Device/siteAction_viewSitesOwnedByMyCompany.action'
     response = @browser.get(url).content.split('|')
     @customers = JSON.parse response[-2]
+    #@customers = Hash[@customers.map { |c| [c['siteId'], c] }]
     @customers
   end
 
@@ -145,7 +147,8 @@ end
 a = Apex.new
 
 # curl -d 'username=FLGANStore&password=password' http://localhost:5000/login
-post '/login' do
+post '/login.json' do
+  content_type :json
   return a.login(params['username'], params['password']).to_json
 end
 
