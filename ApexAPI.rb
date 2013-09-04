@@ -12,8 +12,10 @@ class Apex
   def login(username, password)
     url = 'https://fastsolutions.mroadmin.com/APEX-Login/account_login.action'
     login_data = {'user.login_id' => username, 'user.password' => password}
-    response = @browser.post(url, login_data).code
-    if response == '200'
+    response = @browser.post(url, login_data).content
+    if response =~ /Invalid login!/
+      'Invalid login!'
+    else
       # comId not available unless I navigate further
       url = 'https://fastsolutions.mroadmin.com/Apex-Device/siteAction_getSelectedCompanyList.action'
       response = @browser.get(url).content
@@ -21,7 +23,7 @@ class Apex
       @store = response['tableId']
       # throw out useless data
       response = {'name' => response['name'], 'comId' => response['tableId']}
-    response
+      response
     end
   end
 
@@ -146,7 +148,7 @@ end
 #get('/') { a = Apex.new }
 a = Apex.new
 
-# curl -d 'username=FLGANStore&password=password' http://localhost:5000/login
+# curl -d 'username=FLGANStore&password=password' http://localhost:5000/login.json
 post '/login.json' do
   content_type :json
   return a.login(params['username'], params['password']).to_json
