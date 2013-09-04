@@ -14,7 +14,7 @@ class Apex
     login_data = {'user.login_id' => username, 'user.password' => password}
     response = @browser.post(url, login_data).content
     if response =~ /Invalid login!/
-      'Invalid login!'
+      {}
     else
       # comId not available unless I navigate further
       url = 'https://fastsolutions.mroadmin.com/Apex-Device/siteAction_getSelectedCompanyList.action'
